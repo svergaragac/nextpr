@@ -346,7 +346,7 @@ export function TrendChart({ exercise }: TrendChartProps) {
                 </div>
                 <div className="text-white">
                   <div className="text-xs font-sans text-cohere-muted">
-                    {metricType === 'tonnage' ? 'Volumen Total:' : 'Mejor Marca (1RM):'}
+                    {metricType === 'tonnage' ? 'Volumen Total:' : '1RM estimado:'}
                   </div>
                   <div className="text-base font-mono font-bold text-white flex items-baseline gap-1 mt-0.5">
                     {hoveredPoint.val.toLocaleString()}
@@ -354,14 +354,14 @@ export function TrendChart({ exercise }: TrendChartProps) {
                   </div>
                 </div>
 
-                {metricType === 'tonnage' && (
-                  <div className="mt-1.5 pt-1.5 border-t border-slate-800 text-[10px] text-cohere-stone/80 font-mono flex justify-between">
-                    <span>Serie Top:</span>
-                    <span className="text-white">
-                      {hoveredPoint.log.sets}x{hoveredPoint.log.reps} @ {hoveredPoint.log.weight} kg
-                    </span>
-                  </div>
-                )}
+                <div className="mt-1.5 pt-1.5 border-t border-slate-800 text-[10px] text-cohere-stone/80 font-mono flex justify-between">
+                  <span>{metricType === 'tonnage' ? 'Serie Top:' : 'Estimado de:'}</span>
+                  <span className="text-white">
+                    {metricType === 'tonnage'
+                      ? `${hoveredPoint.log.sets}x${hoveredPoint.log.reps} @ ${hoveredPoint.log.weight} kg`
+                      : `${hoveredPoint.log.weight} kg × ${hoveredPoint.log.reps}`}
+                  </span>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -374,13 +374,15 @@ export function TrendChart({ exercise }: TrendChartProps) {
             <span>
               {metricType === 'tonnage'
                 ? `El tonelaje máximo registrado fue de `
-                : `La mejor marca de 1RM registrada fue de `}
+                : `Tu mejor 1RM estimado fue de `}
               <strong className="text-cohere-primary font-mono font-semibold">{maxVal} kg</strong>
               {maxPoint ? ` el ${formatDateShort(maxPoint.log.date)}` : ''}.
             </span>
           </div>
           <div className="text-[10px] font-mono text-cohere-muted uppercase tracking-wider">
-            Fórmula de volumen: peso × repeticiones × series
+            {metricType === 'tonnage'
+              ? 'Fórmula de volumen: peso × repeticiones × series'
+              : '1RM estimado · Epley: peso × (1 + reps / 30)'}
           </div>
         </div>
       </>
