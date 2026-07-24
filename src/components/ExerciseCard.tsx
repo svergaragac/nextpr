@@ -77,7 +77,7 @@ export function ExerciseCard({ exercise, isSelected, onSelect }: ExerciseCardPro
       {/* Divider + Progress */}
       <div className="h-px bg-cohere-hairline my-3.5" />
       <div className="flex justify-between text-[11px] font-mono text-cohere-slate uppercase tracking-[0.06em] mb-2">
-        <span>Meta {exercise.target1RM}{exercise.unit}</span>
+        <span>Próxima meta {exercise.target1RM}{exercise.unit} 1RM</span>
         <span className="text-cohere-primary font-normal">{progressPercent}%</span>
       </div>
       <div className="w-full bg-[#dcd9d1] h-1.5 rounded-full overflow-hidden">
