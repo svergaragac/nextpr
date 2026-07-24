@@ -39,7 +39,7 @@ export function ExerciseCard({ exercise, isSelected, onSelect }: ExerciseCardPro
     <motion.div
       onClick={onSelect}
       whileHover={{ y: -3 }}
-      className={`relative cursor-pointer rounded-lg p-6 transition-all duration-300 flex flex-col h-[230px] ${
+      className={`relative cursor-pointer rounded-lg p-6 transition-all duration-300 flex flex-col h-[248px] ${
         isSelected
           ? 'bg-cohere-stone ring-1 ring-cohere-primary'
           : 'bg-cohere-stone hover:bg-[#e8e5df]'
@@ -47,32 +47,30 @@ export function ExerciseCard({ exercise, isSelected, onSelect }: ExerciseCardPro
       id={`exercise-card-${exercise.id}`}
     >
       {/* Top Row: Pattern label + Trend chip */}
-      <div className="flex justify-between items-start gap-2 mb-4">
+      <div className="flex justify-between items-start gap-2 mb-3">
         <span className="text-[11px] font-mono text-cohere-body-muted uppercase tracking-[0.08em] pt-1">
           {analysis.patternName}
         </span>
-        <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium font-sans whitespace-nowrap ${trendChip}`}>
+        <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium font-sans whitespace-nowrap shrink-0 ${trendChip}`}>
           {trendText}
         </span>
       </div>
 
-      {/* Name + large display 1RM */}
-      <h3 className="text-lg font-normal text-cohere-primary tracking-[-0.01em] leading-snug line-clamp-1">
+      {/* Name + hero: peso real de trabajo. El 1RM estimado va como dato secundario. */}
+      <h3 className="text-lg font-normal text-cohere-primary tracking-[-0.01em] leading-snug line-clamp-1 mb-1">
         {exercise.name}
       </h3>
-      <div className="flex items-baseline gap-1.5 mt-1">
+      <div className="flex items-baseline gap-1.5">
         <span className="text-[40px] leading-none font-display font-normal text-cohere-primary tracking-[-0.02em]">
-          {analysis.currentValue}
+          {latestLog ? latestLog.weight : analysis.currentValue}
         </span>
         <span className="text-sm font-display text-cohere-body-muted">
-          {analysis.unit} · 1RM est.
+          {analysis.unit}{latestLog ? ` × ${latestLog.reps}` : ''}
         </span>
       </div>
-      {latestLog && (
-        <p className="text-[11px] font-mono text-cohere-body-muted mt-1.5">
-          Trabajas {latestLog.weight} {analysis.unit} × {latestLog.reps}
-        </p>
-      )}
+      <p className="text-[11px] font-mono text-cohere-body-muted mt-1.5">
+        ≈ {analysis.currentValue} {analysis.unit} · 1RM est.
+      </p>
 
       <div className="flex-1" />
 
