@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import app from "./server";
+import app from "./api/index";
 
 // Local development entry point.
 // Reuses the Express app (API routes) from server.ts and adds Vite's dev
