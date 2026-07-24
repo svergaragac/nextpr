@@ -144,7 +144,10 @@ export function TrendChart({ exercise }: TrendChartProps) {
   const handleMouseLeave = () => setHoveredIndex(null);
 
   const hoveredPoint = hoveredIndex !== null ? points[hoveredIndex] ?? null : null;
-  const hoveredAnchor = hoveredIndex === 0 ? 'left' : hoveredIndex === N - 1 ? 'right' : 'center';
+  // Anclar el tooltip según la posición horizontal del punto: los puntos del
+  // tercio derecho abren hacia la izquierda (y viceversa) para no cortarse.
+  const hoveredFrac = hoveredPoint ? (hoveredPoint.x - paddingLeft) / plotWidth : 0.5;
+  const hoveredAnchor = hoveredFrac > 0.72 ? 'right' : hoveredFrac < 0.28 ? 'left' : 'center';
 
   const maxPoint = points.find((p) => p.val === maxVal);
 
