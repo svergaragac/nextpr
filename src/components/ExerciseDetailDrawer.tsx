@@ -135,7 +135,7 @@ export function ExerciseDetailDrawer({
                 <div className="bg-cohere-stone/30 border border-cohere-hairline rounded-lg p-4 flex flex-col justify-between h-[120px] col-span-1 overflow-hidden">
                   <div>
                     <span className="text-[9px] font-mono tracking-wider text-cohere-muted uppercase block">
-                      1RM / META
+                      1RM EST. / META
                     </span>
                     <div className="mt-2 flex items-baseline h-8">
                       <span className="text-xl font-bold font-mono text-cohere-primary">

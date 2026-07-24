@@ -14,6 +14,10 @@ export function ExerciseCard({ exercise, isSelected, onSelect }: ExerciseCardPro
   const progressPercent = calculateProgressPercentage(exercise);
   const trendChange = calculateRMPercentageChange(exercise);
 
+  // Peso real de trabajo más reciente (lo que efectivamente levantas), para
+  // mostrarlo junto al 1RM estimado y que el número grande no se lea como tu peso.
+  const latestLog = [...(exercise.logs || [])].sort((a, b) => a.week - b.week).at(-1);
+
   // Formatting trend percentage change (e.g. +19.8% or -2.5%)
   const formattedChange = trendChange.value >= 0 
     ? `+${trendChange.value.toFixed(1)}%` 
@@ -61,9 +65,14 @@ export function ExerciseCard({ exercise, isSelected, onSelect }: ExerciseCardPro
           {analysis.currentValue}
         </span>
         <span className="text-sm font-display text-cohere-body-muted">
-          {analysis.unit} 1RM
+          {analysis.unit} · 1RM est.
         </span>
       </div>
+      {latestLog && (
+        <p className="text-[11px] font-mono text-cohere-body-muted mt-1.5">
+          Trabajas {latestLog.weight} {analysis.unit} × {latestLog.reps}
+        </p>
+      )}
 
       <div className="flex-1" />
 
