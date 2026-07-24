@@ -361,11 +361,6 @@ app.get("/api/sync-hevy", async (req, res) => {
         let bestReps = 0;
         let totalVolume = 0;
 
-        // TEMP DEBUG: ver los campos crudos de peso que manda la API de Hevy
-        if (title.toLowerCase().includes('press')) {
-          console.log(`[NextPR Debug] "${title}" sets crudos:`, JSON.stringify(sets));
-        }
-
         sets.forEach((set: any) => {
           const w = parseFloat(set.weight_kg) || parseFloat(set.weight) || 0;
           const r = parseInt(set.reps) || 0;
@@ -550,12 +545,6 @@ app.get("/api/sync-hevy", async (req, res) => {
       const current1RM = Math.round(maxEst1RM * 10) / 10;
       const baseline1RM = Math.round(firstEst1RM * 10) / 10;
       const target1RM = Math.round((current1RM * 1.25) / 2.5) * 2.5 || current1RM + 10;
-
-      // TEMP DEBUG: comparar peso crudo/reps vs. el 1RM calculado
-      if (data.name.toLowerCase().includes('shoulder press') || data.name.toLowerCase().includes('press')) {
-        console.log(`[NextPR Debug] "${data.name}": current1RM=${current1RM}kg. Sets crudos:`,
-          rawLogs.map(l => `${l.date}: ${l.weight}kg x${l.reps}reps -> est1RM=${l.est1RM}`).join(' | '));
-      }
 
       // Assign category and pattern
       const category = (data.pattern && winners[data.pattern] === id) ? 'primary' as const : 'secondary' as const;

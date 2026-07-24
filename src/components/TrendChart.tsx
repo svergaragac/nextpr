@@ -108,11 +108,10 @@ export function TrendChart({ exercise }: TrendChartProps) {
     return { x, y, val, log, index, slot };
   }) : [];
 
-  // Semanas dentro de la ventana que no tienen ningún dato — se muestran como
-  // marcas mudas en la base, hoverables, para dejar explícito que esa semana
-  // existe pero no hubo entrenamiento (en vez de fingir un valor en 0).
+  // Todas las semanas de la ventana (para el eje X y el hover). Las semanas sin
+  // datos ya no se dibujan como puntos: el gráfico solo grafica sesiones reales
+  // y deja el hueco vacío (el hover sí sigue explicando que no hubo entrenamiento).
   const allSlots = Array.from({ length: totalWindowWeeks }, (_, i) => i + 1);
-  const emptySlots = allSlots.filter((slot) => !points.some((p) => p.slot === slot));
 
   // Agrupar en segmentos consecutivos: solo se conectan con una línea los puntos
   // de semanas consecutivas. Si hay una semana sin datos en el medio, se corta
@@ -349,19 +348,6 @@ export function TrendChart({ exercise }: TrendChartProps) {
                   fill="#1863dc"
                   stroke="#ffffff"
                   strokeWidth="1.5"
-                />
-              ))}
-
-              {/* Marcas mudas para semanas sin datos: en la base, para hacer explícito
-                  que esa semana existe en la ventana pero no hubo entrenamiento */}
-              {emptySlots.map((slot) => (
-                <circle
-                  key={`empty-${slot}`}
-                  cx={xForSlot(slot)}
-                  cy={paddingTop + plotHeight}
-                  r={hoveredSlot === slot ? 3 : 2}
-                  fill={hoveredSlot === slot ? 'rgb(147, 147, 159)' : 'rgba(147, 147, 159, 0.4)'}
-                  className="transition-all duration-150"
                 />
               ))}
 
