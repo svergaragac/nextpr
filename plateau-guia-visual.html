@@ -1,0 +1,818 @@
+<title>NextPR — Guía visual</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --bg: #f3f5f8;
+    --surface: #ffffff;
+    --surface-2: #eaeef4;
+    --border: #dbe1ea;
+    --text: #14161b;
+    --text-muted: #5c6577;
+    --accent: #1d5fdb;
+    --accent-soft: #e8eefd;
+    --accent-2: #d1583e;
+    --accent-2-soft: #fbeae5;
+    --good: #17875a;
+    --good-soft: #e6f4ec;
+    --line: #b7c0d1;
+    --line-muted: #cdd3de;
+    --on-accent: #f4f7ff;
+    --shadow: 0 1px 2px rgba(20, 22, 27, 0.04), 0 8px 24px rgba(20, 22, 27, 0.05);
+
+    --font-display: -apple-system, "SF Pro Display", "Segoe UI Variable", "Segoe UI", Roboto, sans-serif;
+    --font-body: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1016;
+      --surface: #151a22;
+      --surface-2: #1b212b;
+      --border: #2a3140;
+      --text: #e8ecf3;
+      --text-muted: #99a1b3;
+      --accent: #7099ff;
+      --accent-soft: #1c2947;
+      --accent-2: #ef8a6d;
+      --accent-2-soft: #3a241f;
+      --good: #49d19a;
+      --good-soft: #123528;
+      --line: #3b4356;
+      --line-muted: #2c3242;
+      --on-accent: #0b1020;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1016;
+    --surface: #151a22;
+    --surface-2: #1b212b;
+    --border: #2a3140;
+    --text: #e8ecf3;
+    --text-muted: #99a1b3;
+    --accent: #7099ff;
+    --accent-soft: #1c2947;
+    --accent-2: #ef8a6d;
+    --accent-2-soft: #3a241f;
+    --good: #49d19a;
+    --good-soft: #123528;
+    --line: #3b4356;
+    --line-muted: #2c3242;
+    --on-accent: #0b1020;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
+  }
+  :root[data-theme="light"] {
+    --bg: #f3f5f8;
+    --surface: #ffffff;
+    --surface-2: #eaeef4;
+    --border: #dbe1ea;
+    --text: #14161b;
+    --text-muted: #5c6577;
+    --accent: #1d5fdb;
+    --accent-soft: #e8eefd;
+    --accent-2: #d1583e;
+    --accent-2-soft: #fbeae5;
+    --good: #17875a;
+    --good-soft: #e6f4ec;
+    --line: #b7c0d1;
+    --line-muted: #cdd3de;
+    --on-accent: #f4f7ff;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  ::selection { background: var(--accent-soft); }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    margin: 0;
+    color: var(--text);
+  }
+
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  .prose { max-width: 68ch; }
+
+  /* ---------- Header ---------- */
+  header.masthead {
+    border-bottom: 1px solid var(--border);
+    padding: 48px 0 32px;
+    background: var(--surface);
+  }
+  .eyebrow-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  h1.title { font-size: 38px; line-height: 1.1; }
+  .subtitle {
+    margin-top: 12px;
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 62ch;
+  }
+  .fact-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .chip strong { color: var(--text); font-weight: 700; }
+
+  /* ---------- Mini nav ---------- */
+  nav.mininav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav.mininav .wrap {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  nav.mininav a {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    text-decoration: none;
+    color: var(--text-muted);
+    white-space: nowrap;
+    padding: 7px 12px;
+    border-radius: 7px;
+  }
+  nav.mininav a:hover { background: var(--surface-2); color: var(--text); }
+
+  /* ---------- Sections ---------- */
+  section.section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  section.section:last-of-type { border-bottom: none; }
+  .section-head { margin-bottom: 28px; }
+  .section-kicker {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: block;
+  }
+  h2.section-title { font-size: 27px; margin-bottom: 10px; }
+  .section-desc { color: var(--text-muted); max-width: 68ch; font-size: 15.5px; }
+
+  p { margin: 0 0 14px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    display: flex;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent-2);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 22px;
+  }
+  .callout .mark {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent-2);
+    font-size: 13px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .callout p { font-size: 14.5px; color: var(--text); }
+  .callout p strong { color: var(--text); }
+
+  /* ---------- Diagram scaffolding ---------- */
+  .diagram-scroll {
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+  .diagram-inner { padding: 32px 28px 24px; }
+  .canvas {
+    position: relative;
+    display: grid;
+    column-gap: 28px;
+    row-gap: 40px;
+  }
+  #flow-canvas { grid-template-columns: repeat(3, minmax(220px, 1fr)); min-width: 780px; }
+  #dep-canvas { grid-template-columns: repeat(5, minmax(148px, 1fr)); min-width: 940px; row-gap: 52px; }
+
+  .canvas svg.connectors {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .edge-labels { position: absolute; inset: 0; pointer-events: none; }
+  .edge-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    line-height: 1.3;
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .edge { fill: none; stroke: var(--line); stroke-width: 1.75; }
+  .edge--dashed { stroke-dasharray: 4 4; }
+  .edge--muted { stroke: var(--line-muted); }
+  .edge--good { stroke: var(--good); }
+  .edge--accent2 { stroke: var(--accent-2); }
+
+  /* ---------- Nodes ---------- */
+  .node {
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 15px;
+    min-height: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+  }
+  .node-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .node-title { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+  .node-desc { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+
+  .node--start, .node--final { border-color: var(--good); background: var(--good-soft); }
+  .node--start .node-eyebrow, .node--final .node-eyebrow { color: var(--good); }
+
+  .node--decision { border-color: var(--accent-2); background: var(--accent-2-soft); }
+  .node--decision .node-eyebrow { color: var(--accent-2); }
+
+  .node--branch .node-eyebrow { color: var(--accent); }
+
+  .node--source { border-left: 3px solid var(--accent-2); background: var(--surface-2); }
+  .node--core { background: var(--accent); border-color: var(--accent); }
+  .node--core .node-title, .node--core .node-eyebrow { color: var(--on-accent); }
+  .node--core .node-desc { color: color-mix(in srgb, var(--on-accent) 75%, transparent); }
+  .node--logic { background: var(--surface-2); }
+  .node--logic .node-title { font-family: var(--font-mono); font-size: 13px; }
+  .node--screen { background: var(--surface); }
+  .node--isolated { border-style: dashed; border-width: 1.5px; background: var(--surface); }
+  .node--child { border-style: dashed; }
+
+  /* ---------- Legend ---------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+    border-radius: 0 0 16px 16px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  .legend-swatch { width: 18px; height: 0; border-top: 2px solid var(--line); }
+  .legend-swatch.dashed { border-top-style: dashed; }
+  .legend-swatch.muted { border-top-color: var(--line-muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  /* ---------- Glossary ---------- */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+  }
+  .term-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .term-card h4 { font-size: 14.5px; margin-bottom: 6px; }
+  .term-card p { font-size: 13px; color: var(--text-muted); }
+
+  footer {
+    padding: 32px 0 48px;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 640px) {
+    h1.title { font-size: 28px; }
+    .wrap { padding: 0 18px; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="eyebrow-tag">Guía visual · generada del código</span>
+    <h1 class="title">Cómo funciona NextPR</h1>
+    <p class="subtitle">
+      Un recorrido por la app: qué hace, qué ves en pantalla y cómo viaja la información
+      entre el navegador, el servidor y cada pieza de la interfaz.
+    </p>
+    <div class="fact-chips">
+      <span class="chip">Stack: <strong>React + Vite + Express</strong></span>
+      <span class="chip"><strong>3</strong> ejercicios de enfoque (empuje / jalón / pierna)</span>
+      <span class="chip"><strong>12</strong> semanas de historial de ejemplo</span>
+      <span class="chip">Backend: <strong>1</strong> endpoint (/api/sync-hevy)</span>
+      <span class="chip">IA real usada hoy: <strong>ninguna</strong></span>
+    </div>
+  </div>
+</header>
+
+<nav class="mininav">
+  <div class="wrap">
+    <a href="#resumen">Resumen</a>
+    <a href="#flujo">Flujo de la experiencia</a>
+    <a href="#dependencias">Mapa de dependencias</a>
+    <a href="#conceptos">Conceptos clave</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="resumen" class="section">
+    <div class="section-head">
+      <span class="section-kicker">01 · De qué se trata</span>
+      <h2 class="section-title">Una libreta de progreso para levantar pesas</h2>
+    </div>
+    <div class="prose">
+      <p>
+        <strong>NextPR</strong> es una app pensada para gente que entrena fuerza y quiere saber,
+        de un vistazo, si está mejorando o si se estancó. Sigue tres ejercicios de enfoque —uno
+        de empuje, uno de jalón y uno de pierna— y para cada uno estima tu <em>1RM</em> (el peso
+        máximo que levantarías una sola vez), calcula una proyección a dos meses y arma una
+        recomendación de entrenamiento.
+      </p>
+      <p>
+        Los datos pueden venir de un set de ejemplo guardado en tu propio navegador, o traerse de
+        verdad desde <strong>Hevy</strong> (una app real de registro de entrenamientos) a través de
+        un pequeño servidor que traduce esa información al formato que usa NextPR. También incluye
+        un chat flotante y una barra de "modo simulador" para probar la app con datos falsos antes
+        de conectarla a datos reales.
+      </p>
+    </div>
+    <div class="callout">
+      <span class="mark">Dato curioso</span>
+      <p>
+        El proyecto trae preparada una clave para <strong>Gemini</strong> (un modelo de IA) en sus
+        variables de ejemplo, pero ningún archivo del código la usa hoy. Todo lo que parece
+        "inteligente" —tendencias, proyecciones, recomendaciones y el chat— sale de fórmulas y
+        reglas escritas a mano, no de un modelo de lenguaje real.
+      </p>
+    </div>
+  </section>
+
+  <section id="flujo" class="section">
+    <div class="section-head">
+      <span class="section-kicker">02 · La experiencia paso a paso</span>
+      <h2 class="section-title">Flujo de la experiencia</h2>
+      <p class="section-desc">
+        Qué ve y qué puede hacer una persona desde que abre la app hasta que cierra la pestaña.
+      </p>
+    </div>
+
+    <div class="diagram-scroll">
+      <div class="diagram-inner">
+        <div id="flow-root">
+          <div id="flow-canvas" class="canvas">
+            <svg class="connectors"><defs id="flow-defs"></defs><g class="edges"></g></svg>
+            <div class="edge-labels"></div>
+
+            <div class="node node--start" id="f1" style="grid-column:2;grid-row:1">
+              <span class="node-eyebrow">Inicio</span>
+              <h4 class="node-title">Abrís NextPR en el navegador</h4>
+            </div>
+
+            <div class="node node--decision" id="f2" style="grid-column:2;grid-row:2">
+              <span class="node-eyebrow">Decisión</span>
+              <h4 class="node-title">¿Ya tenías datos guardados de una visita anterior?</h4>
+            </div>
+
+            <div class="node node--branch" id="f3" style="grid-column:1;grid-row:3">
+              <span class="node-eyebrow">Sin datos</span>
+              <h4 class="node-title">Pantalla vacía</h4>
+              <p class="node-desc">Te invita a cargar un set de ejemplo para explorar la app.</p>
+            </div>
+
+            <div class="node" id="f5" style="grid-column:2;grid-row:3">
+              <span class="node-eyebrow">En segundo plano</span>
+              <h4 class="node-title">La app intenta sincronizar sola con Hevy</h4>
+              <p class="node-desc">Si ya configuraste tu clave, cambia los datos de ejemplo por tus entrenamientos reales.</p>
+            </div>
+
+            <div class="node node--branch" id="f4" style="grid-column:3;grid-row:3">
+              <span class="node-eyebrow">Con datos</span>
+              <h4 class="node-title">Entrás directo</h4>
+              <p class="node-desc">Se muestran los ejercicios que ya tenías guardados.</p>
+            </div>
+
+            <div class="node" id="f3b" style="grid-column:1;grid-row:4">
+              <span class="node-eyebrow">Acción</span>
+              <h4 class="node-title">Clic en "Cargar set de ejemplo"</h4>
+            </div>
+
+            <div class="node node--start" id="f6" style="grid-column:2;grid-row:5">
+              <span class="node-eyebrow">Pantalla principal</span>
+              <h4 class="node-title">Panel principal (Dashboard)</h4>
+              <p class="node-desc">Métricas generales + 3 ejercicios de enfoque + tabla de otros ejercicios.</p>
+            </div>
+
+            <div class="node node--decision" id="f7" style="grid-column:2;grid-row:6">
+              <span class="node-eyebrow">Decisión</span>
+              <h4 class="node-title">Elegís qué hacer</h4>
+            </div>
+
+            <div class="node node--branch" id="branchA" style="grid-column:1;grid-row:7">
+              <span class="node-eyebrow">Ruta A</span>
+              <h4 class="node-title">Clic en un ejercicio</h4>
+              <p class="node-desc">Se abre el panel de detalle: gráfico histórico, proyección a 2 meses y recomendación.</p>
+            </div>
+
+            <div class="node node--branch" id="branchB" style="grid-column:2;grid-row:7">
+              <span class="node-eyebrow">Ruta B</span>
+              <h4 class="node-title">Tocás "Sincronizar Hevy"</h4>
+              <p class="node-desc">Trae de nuevo tus entrenamientos reales desde el servidor.</p>
+            </div>
+
+            <div class="node node--branch" id="branchC" style="grid-column:3;grid-row:7">
+              <span class="node-eyebrow">Ruta C</span>
+              <h4 class="node-title">Abrís el chat flotante</h4>
+              <p class="node-desc">Un asistente simulado responde con mensajes fijos.</p>
+            </div>
+
+            <div class="node" id="branchA2" style="grid-column:1;grid-row:8">
+              <span class="node-eyebrow">Ruta A</span>
+              <h4 class="node-title">Registrás una sesión o cambiás su categoría</h4>
+              <p class="node-desc">Cargás peso, reps y series nuevas, o marcás el ejercicio como principal/secundario.</p>
+            </div>
+
+            <div class="node node--final" id="final" style="grid-column:2;grid-row:9">
+              <span class="node-eyebrow">Se repite siempre</span>
+              <h4 class="node-title">Todo cambio se guarda de nuevo en tu navegador</h4>
+              <p class="node-desc">Así lo encontrás igual la próxima vez que abras la app.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch"></span> camino principal</div>
+        <div class="legend-item"><span class="legend-swatch dashed"></span> camino alternativo o condición</div>
+        <div class="legend-item"><span class="legend-swatch dashed muted"></span> no cambia tus datos guardados</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--good)"></span> inicio / resultado</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--accent-2)"></span> decisión</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dependencias" class="section">
+    <div class="section-head">
+      <span class="section-kicker">03 · Cómo está armada por dentro</span>
+      <h2 class="section-title">Mapa de dependencias</h2>
+      <p class="section-desc">
+        Quién le habla a quién: de dónde vienen los datos, quién los procesa y qué pantalla los muestra.
+      </p>
+    </div>
+
+    <div class="diagram-scroll">
+      <div class="diagram-inner">
+        <div id="dep-root">
+          <div id="dep-canvas" class="canvas">
+            <svg class="connectors"><defs id="dep-defs"></defs><g class="edges"></g></svg>
+            <div class="edge-labels"></div>
+
+            <div class="node node--source" id="navegador" style="grid-column:1/3;grid-row:1">
+              <span class="node-eyebrow">Fuente de datos</span>
+              <h4 class="node-title">Tu navegador</h4>
+              <p class="node-desc">Guarda todo en localStorage, así tus datos siguen ahí si cerrás la pestaña.</p>
+            </div>
+
+            <div class="node node--source" id="servidor" style="grid-column:3/6;grid-row:1">
+              <span class="node-eyebrow">Servidor · server.ts</span>
+              <h4 class="node-title">Servidor de NextPR</h4>
+              <p class="node-desc">Le habla a la API real de Hevy usando tu clave secreta, sin exponerla nunca al navegador.</p>
+            </div>
+
+            <div class="node node--core" id="app" style="grid-column:2/5;grid-row:2">
+              <span class="node-eyebrow">Componente raíz</span>
+              <h4 class="node-title">App.tsx</h4>
+              <p class="node-desc">El director de orquesta: guarda el estado de tus ejercicios y decide qué pantalla mostrar.</p>
+            </div>
+
+            <div class="node node--logic" id="datajs" style="grid-column:1/3;grid-row:3">
+              <span class="node-eyebrow">Archivo compartido</span>
+              <h4 class="node-title">data.ts</h4>
+              <p class="node-desc">Guarda y lee tus ejercicios, y calcula el tonelaje, la racha y el progreso general.</p>
+            </div>
+
+            <div class="node node--logic" id="projectionsjs" style="grid-column:3/6;grid-row:3">
+              <span class="node-eyebrow">Archivo compartido</span>
+              <h4 class="node-title">lib/projections.ts</h4>
+              <p class="node-desc">Calcula tendencias, proyecciones a 2 meses y recomendaciones, todo con fórmulas.</p>
+            </div>
+
+            <div class="node node--screen" id="metriccard" style="grid-column:1;grid-row:4">
+              <span class="node-eyebrow">Componente</span>
+              <h4 class="node-title">MetricCard</h4>
+              <p class="node-desc">Tarjeta simple: solo muestra los números que le pasan, no calcula nada.</p>
+            </div>
+
+            <div class="node node--screen" id="exercisecard" style="grid-column:2;grid-row:4">
+              <span class="node-eyebrow">Componente</span>
+              <h4 class="node-title">ExerciseCard</h4>
+              <p class="node-desc">La tarjeta de cada ejercicio de enfoque: 1RM, tendencia y barra de progreso.</p>
+            </div>
+
+            <div class="node node--screen" id="othertable" style="grid-column:3;grid-row:4">
+              <span class="node-eyebrow">Componente</span>
+              <h4 class="node-title">OtherExercisesTable</h4>
+              <p class="node-desc">La tabla de ejercicios secundarios, con opción de promoverlos a principal.</p>
+            </div>
+
+            <div class="node node--screen" id="drawer" style="grid-column:4;grid-row:4">
+              <span class="node-eyebrow">Componente</span>
+              <h4 class="node-title">ExerciseDetailDrawer</h4>
+              <p class="node-desc">Panel lateral de detalle: métricas rápidas, análisis del coach y el gráfico.</p>
+            </div>
+
+            <div class="node node--isolated" id="chatbot" style="grid-column:5;grid-row:4">
+              <span class="node-eyebrow">Componente · simulado</span>
+              <h4 class="node-title">CoachChatbot</h4>
+              <p class="node-desc">Chat flotante con respuestas fijas. Todavía no lee ningún dato real.</p>
+            </div>
+
+            <div class="node node--child" id="trendchart" style="grid-column:4;grid-row:5">
+              <span class="node-eyebrow">Componente hijo</span>
+              <h4 class="node-title">TrendChart</h4>
+              <p class="node-desc">Dibuja el gráfico de volumen o 1RM por semana, con tooltip al pasar el mouse.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot" style="background:var(--accent-2)"></span> fuente de datos externa</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span> componente raíz</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--surface-2);border:1px solid var(--border)"></span> archivo de lógica compartida</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--surface);border:1px solid var(--border)"></span> pantalla / pieza visual</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--surface);border:1.5px dashed var(--text-muted)"></span> aislado / simulado</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="mark">Vale la pena notar</span>
+      <p>
+        <strong>CoachChatbot</strong> no tiene ninguna flecha saliente en el mapa: es intencional.
+        Hoy responde con un mensaje fijo después de esperar 1.5 segundos, sin leer tus
+        entrenamientos ni tus proyecciones. <strong>MetricCard</strong> tampoco calcula nada por su
+        cuenta, solo muestra los números que le pasa App.tsx.
+      </p>
+    </div>
+  </section>
+
+  <section id="conceptos" class="section">
+    <div class="section-head">
+      <span class="section-kicker">04 · Vocabulario</span>
+      <h2 class="section-title">Conceptos clave</h2>
+      <p class="section-desc">Los términos que vas a ver repetidos por toda la app, explicados sin tecnicismos.</p>
+    </div>
+    <div class="glossary-grid">
+      <div class="term-card">
+        <h4>1RM (Una Repetición Máxima)</h4>
+        <p>El peso máximo que podrías levantar una sola vez en un ejercicio. La app lo estima con una fórmula a partir de tus series con más peso.</p>
+      </div>
+      <div class="term-card">
+        <h4>Patrón de movimiento</h4>
+        <p>Cada ejercicio se clasifica como Empuje, Jalón o Pierna según qué músculos trabaja, para asegurar que entrenes los tres de forma pareja.</p>
+      </div>
+      <div class="term-card">
+        <h4>Ejercicio principal vs. secundario</h4>
+        <p>Solo puede haber un ejercicio "principal" por patrón de movimiento: es el que la app usa para medir tu progreso central. El resto queda como secundario.</p>
+      </div>
+      <div class="term-card">
+        <h4>Confianza (alta / media / baja)</h4>
+        <p>Qué tan seguido y regular registraste ese ejercicio. Con pocos datos o resultados muy irregulares, la confianza baja.</p>
+      </div>
+      <div class="term-card">
+        <h4>Estancamiento</h4>
+        <p>Cuando llevás 4 semanas o más sin superar tu marca. La app lo detecta sola y cambia su recomendación para ayudarte a salir de ahí.</p>
+      </div>
+      <div class="term-card">
+        <h4>Tonelaje / Volumen</h4>
+        <p>Peso × repeticiones × series de una sesión. Sirve para ver cuánto trabajo total hiciste, más allá de si subiste peso o no.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Generado a partir del código en Proyectos/nextpr · no se modificó ningún archivo original.
+  </div>
+</footer>
+
+<script>
+  const svgNS = "http://www.w3.org/2000/svg";
+
+  function debounce(fn, ms) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  }
+
+  function ensureMarkers(defsEl) {
+    const colors = {
+      default: getVar('--line'),
+      muted: getVar('--line-muted'),
+      good: getVar('--good'),
+      accent2: getVar('--accent-2')
+    };
+    defsEl.innerHTML = '';
+    Object.entries(colors).forEach(([key, color]) => {
+      const marker = document.createElementNS(svgNS, 'marker');
+      marker.setAttribute('id', 'arrow-' + key);
+      marker.setAttribute('viewBox', '0 0 10 10');
+      marker.setAttribute('refX', '8');
+      marker.setAttribute('refY', '5');
+      marker.setAttribute('markerWidth', '7');
+      marker.setAttribute('markerHeight', '7');
+      marker.setAttribute('orient', 'auto-start-reverse');
+      const path = document.createElementNS(svgNS, 'path');
+      path.setAttribute('d', 'M 0 0 L 10 5 L 0 10 z');
+      path.setAttribute('fill', color);
+      marker.appendChild(path);
+      defsEl.appendChild(marker);
+    });
+  }
+
+  function getVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function wireDiagram(rootId, canvasId, defsId, edges) {
+    const root = document.getElementById(rootId);
+    const canvas = document.getElementById(canvasId);
+    const svg = canvas.querySelector('svg.connectors');
+    const edgesGroup = svg.querySelector('g.edges');
+    const defsEl = document.getElementById(defsId);
+    const labelsLayer = canvas.querySelector('.edge-labels');
+
+    function point(node, side) {
+      const r = node.getBoundingClientRect();
+      const c = canvas.getBoundingClientRect();
+      const x = r.left - c.left;
+      const y = r.top - c.top;
+      if (side === 'top') return { x: x + r.width / 2, y: y };
+      return { x: x + r.width / 2, y: y + r.height };
+    }
+
+    function draw() {
+      ensureMarkers(defsEl);
+      edgesGroup.innerHTML = '';
+      labelsLayer.innerHTML = '';
+
+      const w = canvas.scrollWidth;
+      const h = canvas.scrollHeight;
+      svg.setAttribute('width', w);
+      svg.setAttribute('height', h);
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+      edges.forEach(e => {
+        const fromEl = root.querySelector('#' + e.from);
+        const toEl = root.querySelector('#' + e.to);
+        if (!fromEl || !toEl) return;
+
+        const up = e.dir === 'up';
+        const p1 = point(fromEl, up ? 'top' : 'bottom');
+        const p2 = point(toEl, up ? 'bottom' : 'top');
+        const midY = (p1.y + p2.y) / 2;
+        const d = `M ${p1.x} ${p1.y} C ${p1.x} ${midY}, ${p2.x} ${midY}, ${p2.x} ${p2.y}`;
+
+        const path = document.createElementNS(svgNS, 'path');
+        path.setAttribute('d', d);
+        const colorKey = e.color || 'default';
+        path.setAttribute('class', 'edge edge--' + (e.style || 'solid') + (e.color ? ' edge--' + e.color : ''));
+        path.setAttribute('marker-end', `url(#arrow-${colorKey})`);
+        if (e.bidirectional) path.setAttribute('marker-start', `url(#arrow-${colorKey})`);
+        edgesGroup.appendChild(path);
+
+        if (e.label) {
+          const midX = (p1.x + p2.x) / 2;
+          const span = document.createElement('span');
+          span.className = 'edge-label';
+          span.textContent = e.label;
+          span.style.left = midX + 'px';
+          span.style.top = midY + 'px';
+          labelsLayer.appendChild(span);
+        }
+      });
+    }
+
+    draw();
+    window.addEventListener('resize', debounce(draw, 150));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    setTimeout(draw, 60);
+
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', () => setTimeout(draw, 30));
+
+    return draw;
+  }
+
+  const flowEdges = [
+    { from: 'f1', to: 'f2', style: 'solid' },
+    { from: 'f1', to: 'f5', style: 'dashed', label: 'en paralelo, apenas abrís la app' },
+    { from: 'f2', to: 'f3', style: 'dashed', color: 'accent2', label: 'No' },
+    { from: 'f2', to: 'f4', style: 'dashed', color: 'good', label: 'Sí' },
+    { from: 'f3', to: 'f3b', style: 'solid' },
+    { from: 'f3b', to: 'f6', style: 'solid' },
+    { from: 'f5', to: 'f6', style: 'solid', label: 'si logra sincronizar' },
+    { from: 'f4', to: 'f6', style: 'solid' },
+    { from: 'f6', to: 'f7', style: 'solid' },
+    { from: 'f7', to: 'branchA', style: 'dashed', label: 'clic en un ejercicio' },
+    { from: 'f7', to: 'branchB', style: 'dashed', label: 'clic en Sincronizar' },
+    { from: 'f7', to: 'branchC', style: 'dashed', label: 'abrís el chat' },
+    { from: 'branchA', to: 'branchA2', style: 'solid' },
+    { from: 'branchA2', to: 'final', style: 'solid' },
+    { from: 'branchB', to: 'final', style: 'solid' },
+    { from: 'branchC', to: 'final', style: 'dashed', color: 'muted', label: 'no cambia tus datos guardados' },
+  ];
+
+  const depEdges = [
+    { from: 'servidor', to: 'app', style: 'solid', label: "fetch('/api/sync-hevy')" },
+    { from: 'navegador', to: 'datajs', style: 'dashed', color: 'muted', bidirectional: true, label: 'guarda / lee tus ejercicios' },
+    { from: 'app', to: 'datajs', style: 'solid', label: 'carga y guarda ejercicios' },
+    { from: 'app', to: 'metriccard', style: 'solid', color: 'muted' },
+    { from: 'app', to: 'exercisecard', style: 'solid', color: 'muted' },
+    { from: 'app', to: 'othertable', style: 'solid', color: 'muted' },
+    { from: 'app', to: 'drawer', style: 'solid', color: 'muted' },
+    { from: 'app', to: 'chatbot', style: 'solid', color: 'muted' },
+    { from: 'exercisecard', to: 'projectionsjs', style: 'solid', dir: 'up', label: 'tendencia y 1RM' },
+    { from: 'exercisecard', to: 'datajs', style: 'dashed', color: 'muted', dir: 'up', label: 'progreso hacia la meta' },
+    { from: 'othertable', to: 'projectionsjs', style: 'solid', dir: 'up' },
+    { from: 'drawer', to: 'projectionsjs', style: 'solid', dir: 'up' },
+    { from: 'drawer', to: 'datajs', style: 'dashed', color: 'muted', dir: 'up' },
+    { from: 'drawer', to: 'trendchart', style: 'solid', label: 'incluye el gráfico' },
+    { from: 'trendchart', to: 'projectionsjs', style: 'solid', dir: 'up', label: 'fórmula de 1RM (Epley)' },
+  ];
+
+  wireDiagram('flow-root', 'flow-canvas', 'flow-defs', flowEdges);
+  wireDiagram('dep-root', 'dep-canvas', 'dep-defs', depEdges);
+</script>

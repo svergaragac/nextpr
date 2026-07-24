@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NextPR × Saniti — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Saniti tokens */
+    --canvas:#0b0b0b; --canvas-soft:#212121; --canvas-light:#ffffff; --canvas-paper:#ededed;
+    --brand:#f36458; --brand-deep:#dd0000;
+    --ink:#0b0b0b; --ink-soft:#212121; --graphite:#353535;
+    --slate:#3c4758; --slate-soft:#505b6c; --mute:#797979; --ash:#b9b9b9;
+    --hairline:#ededed; --hairline-soft:#353535;
+    --link-blue:#0052ef; --link-blue-soft:#55beff; --surface-blue:#afe3ff;
+    --success:#37cd84; --error:#dd0000;
+    /* waldenburgNormal → Inter fallback (per design doc) */
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --r-app-xs:3px; --r-app-md:5px; --r-app-lg:6px; --r-mkt:12px; --r-full:99999px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--canvas);color:#fff;font-family:var(--sans);-webkit-font-smoothing:antialiased;font-feature-settings:"cv01","cv11","ss07";}
+  .eyebrow{font-family:var(--mono);font-size:13px;color:var(--brand);text-transform:uppercase;letter-spacing:.04em;}
+  .eyebrow-mute{font-family:var(--mono);font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;}
+  .container{max-width:1280px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  nav{height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hairline-soft);position:sticky;top:0;background:var(--canvas);z-index:20;}
+  .brand{display:flex;align-items:center;gap:8px;}
+  .brand-dot{width:12px;height:12px;border-radius:var(--r-full);background:var(--brand);}
+  .brand-word{font-size:19px;font-weight:600;letter-spacing:-.02em;}
+  .nav-menu{display:flex;gap:28px;}
+  .nav-menu a{color:#fff;text-decoration:none;font-size:15px;opacity:.82;}
+  .nav-menu a:hover{opacity:1;}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  .btn{border:none;cursor:pointer;font-family:var(--sans);font-weight:500;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary{background:#fff;color:var(--ink);border-radius:var(--r-full);height:40px;padding:0 18px;font-size:14px;border:1px solid #fff;}
+  .btn-brand{background:var(--brand);color:var(--ink);border-radius:var(--r-full);height:40px;padding:0 18px;font-size:14px;font-weight:600;}
+  .btn-sec-dark{background:var(--canvas-soft);color:var(--ash);border:1px solid var(--hairline-soft);border-radius:var(--r-app-md);height:36px;padding:0 14px;font-size:13px;}
+  .btn-ghost{background:transparent;color:var(--ash);border:none;font-size:13px;padding:0 6px;cursor:pointer;}
+
+  /* HERO */
+  .hero{padding:72px 0 40px;}
+  .hero h1{font-size:96px;line-height:.98;letter-spacing:-4px;font-weight:400;max-width:14ch;}
+  .hero h1 .accent{color:var(--brand);}
+  .hero .sub{font-size:18px;line-height:1.5;color:var(--ash);max-width:52ch;margin-top:24px;letter-spacing:-.01em;}
+  .hero-meta{display:flex;gap:24px;align-items:center;margin-top:28px;}
+
+  section{padding:56px 0;}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;gap:16px;flex-wrap:wrap;}
+  .sec-head h2{font-size:38px;letter-spacing:-1.1px;font-weight:400;line-height:1.1;}
+  .sec-head .eyebrow{display:block;margin-bottom:10px;}
+
+  /* METRIC CARDS */
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .metric{background:var(--canvas-soft);border:1px solid var(--hairline-soft);border-radius:var(--r-mkt);padding:28px;}
+  .metric .label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);}
+  .metric .val{font-size:48px;letter-spacing:-1.6px;font-weight:400;margin-top:16px;line-height:1;}
+  .metric .val span{font-size:20px;color:var(--ash);letter-spacing:-.3px;margin-left:4px;}
+  .metric .delta{margin-top:12px;font-size:14px;color:var(--ash);}
+  .up{color:var(--success);font-weight:500;}
+  .down{color:var(--brand);font-weight:500;}
+
+  /* PRIMARY EXERCISE CARDS */
+  .primaries{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .ex-card{background:var(--canvas-soft);border:1px solid var(--hairline-soft);border-radius:var(--r-mkt);padding:28px;display:flex;flex-direction:column;gap:14px;min-height:280px;position:relative;}
+  .ex-card.brand{background:var(--brand);border-color:var(--brand);color:var(--ink);}
+  .ex-card.brand .eyebrow,.ex-card.brand .muted,.ex-card.brand .track-note{color:rgba(11,11,11,.7);}
+  .ex-card .top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .ex-card h3{font-size:24px;letter-spacing:-.4px;font-weight:400;}
+  .ex-card .rm{font-size:44px;letter-spacing:-1.4px;line-height:1;font-weight:400;}
+  .ex-card .rm span{font-size:18px;color:var(--ash);margin-left:3px;}
+  .ex-card.brand .rm span{color:rgba(11,11,11,.65);}
+  .muted{color:var(--ash);font-size:13px;}
+  .track-note{font-family:var(--mono);font-size:11px;color:var(--ash);}
+  .pill{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:4px 9px;border-radius:var(--r-full);border:1px solid var(--hairline-soft);color:var(--ash);white-space:nowrap;}
+  .pill.stag{background:rgba(221,0,0,.12);border-color:rgba(221,0,0,.35);color:#ff6b6b;}
+  .pill.pr{background:rgba(55,205,132,.12);border-color:rgba(55,205,132,.35);color:var(--success);}
+  .pill.on-brand{background:rgba(11,11,11,.12);border-color:rgba(11,11,11,.25);color:var(--ink);}
+  /* progress bar */
+  .prog{margin-top:auto;}
+  .prog-track{height:6px;border-radius:var(--r-full);background:var(--graphite);overflow:hidden;}
+  .ex-card.brand .prog-track{background:rgba(11,11,11,.2);}
+  .prog-fill{height:100%;background:#fff;border-radius:var(--r-full);}
+  .ex-card.brand .prog-fill{background:var(--ink);}
+  .prog-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ash);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;}
+  .ex-card.brand .prog-row{color:rgba(11,11,11,.7);}
+  .spark{margin-top:4px;}
+
+  /* POLARITY FLIP — light band */
+  .light{background:var(--canvas-light);color:var(--ink);}
+  .light .eyebrow{color:var(--brand-deep);}
+  .light .sec-head h2{color:var(--ink);}
+  .light .sub{color:var(--slate);}
+  table{width:100%;border-collapse:collapse;}
+  thead th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);text-align:left;padding:12px 16px;border-bottom:1px solid var(--hairline);font-weight:400;}
+  thead th.num,tbody td.num{text-align:right;}
+  tbody td{font-size:15px;letter-spacing:-.15px;padding:16px;border-bottom:1px solid var(--hairline);color:var(--ink);}
+  tbody tr:hover{background:#fafafa;}
+  .ex-name{font-weight:500;}
+  .chk{color:var(--success);font-weight:600;}
+  .tbl-pill{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:var(--r-full);border:1px solid var(--hairline);color:var(--slate);}
+  .btn-on-light{background:var(--ink);color:#fff;border-radius:var(--r-full);height:34px;padding:0 14px;font-size:13px;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--hairline-soft);padding:64px 0 40px;}
+  .foot-grid{display:grid;grid-template-columns:2fr repeat(3,1fr);gap:32px;}
+  .foot-eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-bottom:16px;}
+  .foot-col a{display:block;color:var(--ash);text-decoration:none;font-size:13px;margin-bottom:10px;}
+  .foot-col a:hover{color:#fff;}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--hairline-soft);}
+  .foot-bottom .meta{font-family:var(--mono);font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;}
+
+  /* CHATBOT bubble */
+  .coach{position:fixed;bottom:24px;right:24px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+  .coach-card{width:340px;background:var(--canvas-soft);border:1px solid var(--hairline-soft);border-radius:var(--r-mkt);overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.5);}
+  .coach-head{background:var(--canvas);padding:16px;border-bottom:1px solid var(--hairline-soft);display:flex;align-items:center;gap:10px;}
+  .coach-head .dot{width:10px;height:10px;border-radius:var(--r-full);background:var(--brand);}
+  .coach-head .t{font-size:14px;font-weight:500;}
+  .coach-head .s{font-family:var(--mono);font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;}
+  .coach-body{padding:16px;display:flex;flex-direction:column;gap:10px;}
+  .msg{font-size:13px;line-height:1.5;padding:10px 12px;border-radius:10px;max-width:85%;}
+  .msg.coach-m{background:var(--canvas);color:var(--ash);border:1px solid var(--hairline-soft);align-self:flex-start;border-top-left-radius:2px;}
+  .msg.user-m{background:#fff;color:var(--ink);align-self:flex-end;border-top-right-radius:2px;}
+  .coach-input{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--hairline-soft);}
+  .coach-input input{flex:1;background:var(--canvas);border:1px solid var(--hairline-soft);border-radius:var(--r-app-xs);color:var(--ash);font-size:13px;padding:9px 12px;font-family:var(--sans);outline:none;}
+  .coach-send{width:36px;height:36px;border-radius:var(--r-app-md);background:var(--brand);color:var(--ink);border:none;cursor:pointer;font-weight:600;}
+  .coach-bubble{width:56px;height:56px;border-radius:var(--r-full);background:var(--brand);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(243,100,88,.4);align-self:flex-end;}
+
+  .note-bar{background:var(--surface-blue);color:var(--ink);border-radius:var(--r-app-lg);padding:16px 20px;font-size:15px;letter-spacing:-.15px;display:flex;align-items:center;gap:12px;margin-top:8px;}
+
+  @media(max-width:900px){
+    .metrics,.primaries{grid-template-columns:1fr;}
+    .hero h1{font-size:60px;letter-spacing:-2px;}
+    .nav-menu{display:none;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .coach-card{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+    <div class="brand"><span class="brand-dot"></span><span class="brand-word">NextPR</span></div>
+    <div class="nav-menu">
+      <a href="#">Resumen</a><a href="#">Ejercicios</a><a href="#">Proyecciones</a><a href="#">Integraciones</a>
+    </div>
+    <div class="nav-right">
+      <button class="btn-ghost">Cerrar sesión</button>
+      <button class="btn btn-sec-dark">Conectar apps</button>
+      <button class="btn btn-brand">Sincronizar Hevy</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">// Strength Intelligence · Modo MVP</span>
+    <h1 style="margin-top:20px;">Tu fuerza,<br>proyectada a <span class="accent">2 meses.</span></h1>
+    <p class="sub">Enfoque en un ejercicio por patrón de movimiento — empuje, jalón, pierna. Detectamos estancamientos y proyectamos tu 1RM con tus datos reales de Hevy.</p>
+    <div class="hero-meta">
+      <button class="btn btn-primary">Ver análisis de Sentadilla →</button>
+      <span class="eyebrow-mute">Sync · Hevy: Hoy, 12:04</span>
+    </div>
+  </div>
+</header>
+
+<!-- METRICS -->
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div><span class="eyebrow">// Resumen rápido</span><h2>Últimas 4 semanas</h2></div>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="label">Total Levantado</div>
+        <div class="val">48.240<span>kg</span></div>
+        <div class="delta"><span class="up">▲ +5,2%</span> vs. mes anterior</div>
+      </div>
+      <div class="metric">
+        <div class="label">Consistencia Actual</div>
+        <div class="val">14<span>días</span></div>
+        <div class="delta">Racha máxima registrada: <strong style="color:#fff;font-family:var(--mono)">21 días</strong></div>
+      </div>
+      <div class="metric">
+        <div class="label">Progreso Promedio de Metas</div>
+        <div class="val">69<span>%</span></div>
+        <div class="delta">Hacia hitos de peso objetivo (1RM)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIMARY EXERCISES -->
+<section style="padding-top:16px;">
+  <div class="container">
+    <div class="sec-head">
+      <div><span class="eyebrow">// Un ejercicio por patrón</span><h2>Enfoque principal</h2></div>
+      <span class="eyebrow-mute">3 patrones · empuje / jalón / pierna</span>
+    </div>
+    <div class="primaries">
+
+      <!-- Empuje: estancado -->
+      <div class="ex-card">
+        <div class="top">
+          <span class="eyebrow">Empuje (Push)</span>
+          <span class="pill stag">Estancado · 8 sem</span>
+        </div>
+        <h3>Press Banca</h3>
+        <div class="rm">100<span>kg 1RM</span></div>
+        <div class="track-note">Meta 110 kg · sin subir peso desde 18 may</div>
+        <svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#ff6b6b" stroke-width="2" points="0,26 30,20 60,14 90,10 120,10 150,10 180,10 200,10"/>
+        </svg>
+        <div class="prog">
+          <div class="prog-row"><span>Progreso</span><span>60%</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:60%"></div></div>
+        </div>
+      </div>
+
+      <!-- Jalón: nuevo PR → brand card (anchor, único por vista) -->
+      <div class="ex-card brand">
+        <div class="top">
+          <span class="eyebrow">Jalón (Pull)</span>
+          <span class="pill on-brand">★ Nuevo PR</span>
+        </div>
+        <h3 style="color:var(--ink)">Peso Muerto</h3>
+        <div class="rm" style="color:var(--ink)">180<span>kg 1RM</span></div>
+        <div class="track-note">Meta 190 kg · récord el 13 jul (+5 kg)</div>
+        <svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#0b0b0b" stroke-width="2" points="0,30 30,26 60,22 90,18 120,14 150,12 180,8 200,4"/>
+        </svg>
+        <div class="prog">
+          <div class="prog-row"><span>Progreso</span><span>75%</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+
+      <!-- Pierna: progresando -->
+      <div class="ex-card">
+        <div class="top">
+          <span class="eyebrow">Pierna (Legs)</span>
+          <span class="pill pr">Progresando</span>
+        </div>
+        <h3>Sentadilla</h3>
+        <div class="rm">140<span>kg 1RM</span></div>
+        <div class="track-note">Meta 150 kg · última mejora 13 jul</div>
+        <svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none">
+          <polyline fill="none" stroke="#ffffff" stroke-width="2" points="0,30 30,27 60,23 90,19 120,15 150,12 180,9 200,6"/>
+        </svg>
+        <div class="prog">
+          <div class="prog-row"><span>Progreso</span><span>71%</span></div>
+          <div class="prog-track"><div class="prog-fill" style="width:71%"></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note-bar">
+      <strong>Coach IA:</strong> Tu Press Banca lleva 8 semanas estancado en 100 kg. Probá una semana de descarga (–10%) o cambiá a rangos de 4-6 reps con más descanso.
+    </div>
+  </div>
+</section>
+
+<!-- POLARITY FLIP: light comparison band -->
+<section class="light">
+  <div class="container">
+    <div class="sec-head">
+      <div><span class="eyebrow">// Auxiliares</span><h2>Otros ejercicios</h2></div>
+      <p class="sub" style="max-width:34ch;margin:0;">Promocioná cualquiera a principal de su patrón.</p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th><th>Patrón</th><th class="num">1RM</th><th class="num">Meta</th>
+          <th class="num">Progreso</th><th>Tendencia</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ex-name">Press Militar</td><td><span class="tbl-pill">Empuje</span></td>
+          <td class="num">71 kg</td><td class="num">80 kg</td><td class="num">62%</td>
+          <td><span class="chk">↗</span> Lineal</td><td class="num"><button class="btn btn-on-light">Promover</button></td>
+        </tr>
+        <tr>
+          <td class="ex-name">Remo con Barra</td><td><span class="tbl-pill">Jalón</span></td>
+          <td class="num">105 kg</td><td class="num">115 kg</td><td class="num">68%</td>
+          <td><span class="chk">↗</span> Lineal</td><td class="num"><button class="btn btn-on-light">Promover</button></td>
+        </tr>
+        <tr>
+          <td class="ex-name">Dominadas (Lastre)</td><td><span class="tbl-pill">Jalón</span></td>
+          <td class="num">20 kg</td><td class="num">28 kg</td><td class="num">56%</td>
+          <td style="color:var(--brand-deep)">→ Estancado</td><td class="num"><button class="btn btn-on-light">Promover</button></td>
+        </tr>
+        <tr>
+          <td class="ex-name">Curl de Bíceps</td><td><span class="tbl-pill">Jalón</span></td>
+          <td class="num">20 kg</td><td class="num">25 kg</td><td class="num">44%</td>
+          <td style="color:var(--brand-deep)">→ Estancado</td><td class="num"><button class="btn btn-on-light">Promover</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="brand" style="margin-bottom:16px;"><span class="brand-dot"></span><span class="brand-word">NextPR</span></div>
+        <p class="muted" style="max-width:32ch;">Construido para levantadores de fuerza consistentes. Proyectado a 2 meses.</p>
+      </div>
+      <div class="foot-col">
+        <div class="foot-eyebrow">Producto</div>
+        <a href="#">Resumen</a><a href="#">Proyecciones</a><a href="#">Coach IA</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-eyebrow">Integraciones</div>
+        <a href="#">Hevy</a><a href="#">Strava</a><a href="#">Garmin</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-eyebrow">Cuenta</div>
+        <a href="#">Perfil</a><a href="#">Cerrar sesión</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="meta">MVP v1.0.0 · © 2026 NextPR</span>
+      <span class="meta">Preview · Saniti design language</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="coach">
+  <div class="coach-card">
+    <div class="coach-head">
+      <span class="dot"></span>
+      <div><div class="t">Coach IA</div><div class="s">Modo de aprendizaje activo</div></div>
+    </div>
+    <div class="coach-body">
+      <div class="msg coach-m">¡Hola! Preguntame sobre tus récords, tu progreso o tus proyecciones de 1RM.</div>
+      <div class="msg user-m">¿Algún ejercicio está estancado?</div>
+      <div class="msg coach-m">Sí — tu Press Banca lleva 8 semanas en 100 kg. Te conviene una descarga.</div>
+    </div>
+    <div class="coach-input">
+      <input placeholder="Escribe tu pregunta…" />
+      <button class="coach-send">→</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

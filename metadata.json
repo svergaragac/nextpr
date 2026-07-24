@@ -1,0 +1,6 @@
+{
+  "name": "NextPR",
+  "description": "Análisis de progreso y detección de estancamientos para levantadores de fuerza consistentes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
