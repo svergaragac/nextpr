@@ -302,7 +302,15 @@ export default function App() {
     );
   }
 
-  const secondaryExercises = exercises.filter((e) => e.category === 'secondary');
+  // Fecha de la última sesión registrada de un ejercicio (su actividad más reciente).
+  const lastActivityMs = (e: Exercise) =>
+    e.logs.reduce((max, l) => Math.max(max, new Date(l.date).getTime()), 0);
+
+  // Ejercicios secundarios ordenados por actividad reciente: los que llevas más
+  // tiempo sin entrenar quedan al final.
+  const secondaryExercises = exercises
+    .filter((e) => e.category === 'secondary')
+    .sort((a, b) => lastActivityMs(b) - lastActivityMs(a));
 
   const empujeExercise = exercises.find(e => e.category === 'primary' && e.pattern === 'empuje');
   const jalonExercise = exercises.find(e => e.category === 'primary' && e.pattern === 'jalon');

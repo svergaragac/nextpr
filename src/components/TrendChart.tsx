@@ -138,16 +138,17 @@ export function TrendChart({ exercise }: TrendChartProps) {
     const scaleX = rect.width / width;
     const scaleY = rect.height / height;
     const pt = points[closest];
-    setTooltipPos({ x: pt.x * scaleX, y: pt.y * scaleY - 15 });
+    // Clamp horizontal del tooltip para que nunca se corte contra los bordes
+    // del gráfico, sin importar cerca de qué extremo esté el punto.
+    const TT_W = 230;
+    const rawX = pt.x * scaleX;
+    const clampedX = Math.max(8, Math.min(rawX - TT_W / 2, rect.width - TT_W - 8));
+    setTooltipPos({ x: clampedX, y: pt.y * scaleY - 15 });
   };
 
   const handleMouseLeave = () => setHoveredIndex(null);
 
   const hoveredPoint = hoveredIndex !== null ? points[hoveredIndex] ?? null : null;
-  // Anclar el tooltip según la posición horizontal del punto: los puntos del
-  // tercio derecho abren hacia la izquierda (y viceversa) para no cortarse.
-  const hoveredFrac = hoveredPoint ? (hoveredPoint.x - paddingLeft) / plotWidth : 0.5;
-  const hoveredAnchor = hoveredFrac > 0.72 ? 'right' : hoveredFrac < 0.28 ? 'left' : 'center';
 
   const maxPoint = points.find((p) => p.val === maxVal);
 
@@ -331,16 +332,11 @@ export function TrendChart({ exercise }: TrendChartProps) {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.15 }}
-                className="absolute pointer-events-none bg-cohere-primary border border-cohere-slate/40 rounded-xl p-3 shadow-2xl z-30 min-w-[160px]"
+                className="absolute pointer-events-none bg-cohere-primary border border-cohere-slate/40 rounded-xl p-3 shadow-2xl z-30 w-[230px]"
                 style={{
                   left: `${tooltipPos.x}px`,
                   top: `${tooltipPos.y}px`,
-                  transform:
-                    hoveredAnchor === 'left'
-                      ? 'translate(0%, -100%)'
-                      : hoveredAnchor === 'right'
-                        ? 'translate(-100%, -100%)'
-                        : 'translate(-50%, -100%)',
+                  transform: 'translateY(-100%)',
                 }}
               >
                 <div className="flex items-center gap-1 text-[10px] font-mono font-semibold text-cohere-coral uppercase tracking-wider mb-1">
