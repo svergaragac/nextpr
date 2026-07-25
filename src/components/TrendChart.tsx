@@ -117,11 +117,11 @@ export function TrendChart({ exercise }: TrendChartProps) {
   const labelEvery = N <= 7 ? 1 : Math.ceil(N / 6);
   const shouldLabelIndex = (i: number) => i === 0 || i === N - 1 || i % labelEvery === 0;
 
-  // Hover: encuentra el punto más cercano por posición horizontal
-  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+  // Encuentra el punto más cercano a una coordenada X (de mouse o de toque) y
+  // posiciona el tooltip. Compartido entre eventos de mouse y táctiles.
+  const updateHoverFromClientX = (clientX: number, rect: DOMRect) => {
     if (points.length === 0) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const svgX = ((e.clientX - rect.left) / rect.width) * width;
+    const svgX = ((clientX - rect.left) / rect.width) * width;
 
     let closest = 0;
     let minDist = Math.abs(svgX - points[0].x);
@@ -144,6 +144,16 @@ export function TrendChart({ exercise }: TrendChartProps) {
     const rawX = pt.x * scaleX;
     const clampedX = Math.max(8, Math.min(rawX - TT_W / 2, rect.width - TT_W - 8));
     setTooltipPos({ x: clampedX, y: pt.y * scaleY - 15 });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    updateHoverFromClientX(e.clientX, e.currentTarget.getBoundingClientRect());
+  };
+
+  // En mobile no hay hover: tocar/arrastrar sobre el gráfico muestra el tooltip.
+  const handleTouch = (e: React.TouchEvent<SVGSVGElement>) => {
+    if (e.touches.length === 0) return;
+    updateHoverFromClientX(e.touches[0].clientX, e.currentTarget.getBoundingClientRect());
   };
 
   const handleMouseLeave = () => setHoveredIndex(null);
@@ -203,9 +213,11 @@ export function TrendChart({ exercise }: TrendChartProps) {
         <div className="relative w-full overflow-visible">
           <svg
             viewBox={`0 0 ${width} ${height}`}
-            className="w-full h-auto select-none overflow-visible cursor-crosshair"
+            className="w-full h-auto select-none overflow-visible cursor-crosshair touch-pan-y"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
+            onTouchStart={handleTouch}
+            onTouchMove={handleTouch}
           >
             <defs>
               <linearGradient id="cohereAreaGradient" x1="0" y1="0" x2="0" y2="1">
